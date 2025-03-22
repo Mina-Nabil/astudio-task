@@ -3,11 +3,14 @@
 namespace App\Models\EAV;
 
 use App\Models\Job;
+use Database\Factories\AttributeFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Attribute extends Model
 {
+    use HasFactory;
     protected $table = 'attributes';
     protected $fillable = ['name', 'type', 'options'];
     public $timestamps = false;
@@ -31,6 +34,11 @@ class Attribute extends Model
         return $this->belongsToMany(Job::class, 'job_attribute_values')
         ->withPivot('value')
         ->as('value_object');
+    }
+    
+    protected static function newFactory()
+    {
+        return AttributeFactory::new();
     }
     
 }

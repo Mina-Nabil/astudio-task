@@ -7,9 +7,11 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Job extends Model
 {
+    use HasFactory;
 
     const STATUS_DRAFT = 'draft';
     const STATUS_PUBLISHED = 'published';
@@ -51,13 +53,18 @@ class Job extends Model
     ///relations
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'job_category');
     }
 
     public function locations(): BelongsToMany
     {
-        return $this->belongsToMany(Location::class);
+        return $this->belongsToMany(Location::class, 'job_location');
     }
+
+    public function languages(): BelongsToMany
+    {
+        return $this->belongsToMany(Language::class, 'job_language');
+    }   
 
     public function attributes(): BelongsToMany
     {
