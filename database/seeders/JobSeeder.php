@@ -26,7 +26,7 @@ class JobSeeder extends Seeder
 
         Job::factory(100)->create()->each(function ($job) use ($attributes, $categories, $locations, $languages) {
             $job->categories()->attach($categories->random(random_int(1, 3)));
-            //location can be full remote or local
+            //location can be full remote or local 
             $job->locations()->attach($locations->random(random_int(0, 3)));
             $job->languages()->attach($languages->random(random_int(1, 3)));
             for ($i = 0; $i < random_int(1, 12); $i++) {
