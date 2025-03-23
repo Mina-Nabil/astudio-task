@@ -33,6 +33,7 @@ class JobController extends Controller
 
     public function show(Job $job)
     {
+        $job->load('attributes', 'categories', 'locations', 'languages');
         return new JobResource($job);
     }
 

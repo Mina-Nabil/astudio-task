@@ -150,10 +150,10 @@ class Job extends Model
             }
 
             // Update attributes if provided
-            if ($request->has('attributes') && is_array($request->attributes)) {
+            if ($request->has('attributes') && is_array($request['attributes'])) {
                 // Get existing attribute IDs to determine which ones to detach
                 $existingAttributeIds = $this->attributes()->pluck('attributes.id')->toArray();
-                $newAttributeIds = array_column($request->attributes, 'id');
+                $newAttributeIds = array_column($request['attributes'], 'id');
 
                 // Attribute IDs to detach (in existing but not in new)
                 $attributeIdsToDetach = array_diff($existingAttributeIds, $newAttributeIds);
