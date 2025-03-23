@@ -1,0 +1,652 @@
+{
+	"info": {
+		"_postman_id": "c8612971-6037-4efe-b434-9f99e9fbe566",
+		"name": "AStudio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38975133",
+		"_collection_link": "https://smart-solutions.postman.co/workspace/8c994b19-9830-4374-80a2-06b82ec4e2e3/collection/38975133-c8612971-6037-4efe-b434-9f99e9fbe566?action=share&source=collection_link&creator=38975133"
+	},
+	"item": [
+		{
+			"name": "Job Resource",
+			"item": [
+				{
+					"name": "Jobs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/jobs?filter=(published_at>=2023-01-01) AND (salary_min>=10000 AND salary_max<=120000) AND attribute:industry=Technology",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"jobs"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "(published_at>=2023-01-01) AND (salary_min>=10000 AND salary_max<=120000) AND attribute:industry=Technology"
+								}
+							]
+						},
+						"description": "### API Request Description\n\nThis endpoint makes an HTTP GET request to retrieve a list of jobs based on specified filters such as published date, salary range, and industry attribute.\n\n### API Response\n\nThe response returned is a JSON object with the following structure:\n\n``` json\n{\n    \"data\": [\n        {\n            \"id\": 0,\n            \"title\": \"\",\n            \"description\": \"\",\n            \"status\": \"\",\n            \"company_name\": \"\",\n            \"salary_min\": \"\",\n            \"salary_max\": \"\",\n            \"job_type\": \"\",\n            \"is_remote\": 0,\n            \"published_at\": \"\",\n            \"created_at\": \"\",\n            \"updated_at\": \"\",\n            \"attributes\": [\n                {\n                    \"id\": 0,\n                    \"name\": \"\",\n                    \"value\": \"\"\n                }\n            ],\n            \"languages\": [\n                {\n                    \"id\": 0,\n                    \"name\": \"\"\n                }\n            ],\n            \"categories\": [\n                {\n                    \"id\": 0,\n                    \"name\": \"\"\n                }\n            ],\n            \"locations\": [\n                {\n                    \"id\": 0,\n                    \"city\": \"\",\n                    \"country\": \"\",\n                    \"state\": \"\"\n                }\n            ]\n        }\n    ],\n    \"links\": {\n        \"first\": \"\",\n        \"last\": \"\",\n        \"prev\": null,\n        \"next\": \"\"\n    },\n    \"meta\": {\n        \"current_page\": 0,\n        \"from\": 0,\n        \"last_page\": 0,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"\",\n                \"active\": true\n            }\n        ],\n        \"path\": \"\",\n        \"per_page\": 0,\n        \"to\": 0,\n        \"total\": 0\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Job By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/jobs/4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"jobs",
+								"4"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "(published_at>=2023-01-01) AND (salary_min>=10000 AND salary_max<=120000) AND attribute:industry=Technology",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### GET /api/jobs/4\n\nThis endpoint retrieves details of a specific job with the given ID.\n\n#### Request\n\nNo request body is required for this endpoint.\n\n#### Response\n\nThe response will be a JSON object with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": { \"type\": \"integer\" },\n        \"title\": { \"type\": \"string\" },\n        \"description\": { \"type\": \"string\" },\n        \"status\": { \"type\": \"string\" },\n        \"company_name\": { \"type\": \"string\" },\n        \"salary_min\": { \"type\": \"string\" },\n        \"salary_max\": { \"type\": \"string\" },\n        \"job_type\": { \"type\": \"string\" },\n        \"is_remote\": { \"type\": \"integer\" },\n        \"published_at\": { \"type\": \"string\" },\n        \"created_at\": { \"type\": \"string\" },\n        \"updated_at\": { \"type\": \"string\" },\n        \"attributes\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"id\": { \"type\": \"integer\" },\n              \"name\": { \"type\": \"string\" },\n              \"value\": { \"type\": \"string\" }\n            }\n          }\n        },\n        \"languages\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"id\": { \"type\": \"integer\" },\n              \"name\": { \"type\": \"string\" }\n            }\n          }\n        },\n        \"categories\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"id\": { \"type\": \"integer\" },\n              \"name\": { \"type\": \"string\" }\n            }\n          }\n        },\n        \"locations\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"id\": { \"type\": \"integer\" },\n              \"city\": { \"type\": \"string\" },\n              \"country\": { \"type\": \"string\" },\n              \"state\": { \"type\": \"string\" }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "New Job",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Web developer",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "company_name",
+									"value": "AStudio",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Backend web developemnt",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "salary_min",
+									"value": "50000",
+									"description": "Required - Numeric",
+									"type": "text"
+								},
+								{
+									"key": "salary_max",
+									"value": "90000",
+									"description": "Required - Numeric - Must be greater than salary_min",
+									"type": "text"
+								},
+								{
+									"key": "is_remote",
+									"value": "1",
+									"description": "Required \n0 or 1",
+									"type": "text"
+								},
+								{
+									"key": "job_type",
+									"value": "full-time",
+									"description": "Options: 'full-time' , 'part-time' , 'contract' , 'freelance'",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "published",
+									"description": "Options: 'draft' , 'published' , 'archived' ",
+									"type": "text"
+								},
+								{
+									"key": "published_at",
+									"value": "",
+									"description": "Date format : yyyy-mm-dd - Can be null",
+									"type": "text"
+								},
+								{
+									"key": "categories[]",
+									"value": "1",
+									"description": "Array of ids  (Can be null)\nUse categoties endpoint for available options",
+									"type": "text"
+								},
+								{
+									"key": "locations[]",
+									"value": "2",
+									"description": "Array of ids  (Can be null)\nUse locations endpoint for available options",
+									"type": "text"
+								},
+								{
+									"key": "locations[]",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "languages[]",
+									"value": "4",
+									"description": "Array of ids  (Can be null)\nUse languages endpoint for available options",
+									"type": "text"
+								},
+								{
+									"key": "languages[]",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "languages[]",
+									"value": "9",
+									"type": "text"
+								},
+								{
+									"key": "languages[]",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "attributes[0][id]",
+									"value": "7",
+									"description": "Array of Objects\nObject Structure \nid: string (Use Attribute endpoint for options)\nvalue: string \n\n",
+									"type": "text"
+								},
+								{
+									"key": "attributes[0][value]",
+									"value": "Senior",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/api/jobs",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"jobs"
+							]
+						},
+						"description": "The API endpoint allows the creation of a new job posting. The request should be sent to {{host}}/api/jobs using the HTTP POST method. The request body should be of form-data type and include the following parameters:\n\n- title (Required, type: text) : The title of the job posting.\n    \n- company_name (Required, type: text) : The name of the hiring company.\n    \n- description (Required, type: text) : Description of the job.\n    \n- salary_min (Required - Numeric, type: text) : The minimum salary offered for the job.\n    \n- salary_max (Required - Numeric - Must be greater than salary_min, type: text) : The maximum salary offered for the job.\n    \n- is_remote (Required, type: text) : Indicates if the job can be done remotely. Use 0 or 1 as the value.\n    \n- job_type (type: text) : Type of job such as 'full-time', 'part-time', 'contract', or 'freelance'.\n    \n- status (type: text) : Status of the job posting, options include 'draft', 'published', or 'archived'.\n    \n- published_at (type: text) : Date when the job was published. Should be in the format yyyy-mm-dd and can be null.\n    \n- categories\\[\\] (type: text) : An array of category ids. Use the categories endpoint for available options. Can be null.\n    \n- locations\\[\\] (type: text) : An array of location details.\n    \n- languages\\[\\] (type: text) : An array of languages required for the job.\n    \n- attributes\\[0\\]\\[id\\] (type: text) : Array of objects with id and value for additional attributes. Use the Attribute endpoint for options.\n    \n- attributes\\[0\\]\\[value\\] (type: text) : Value for the corresponding attribute id.\n    \n\nThe response to the request will have a status code of 201 and a JSON content type. The response body will contain the newly created job posting data in the following format:\n\n``` json\n{\n  \"data\": {\n    \"id\": 0,\n    \"title\": \"\",\n    \"description\": \"\",\n    \"status\": \"\",\n    \"company_name\": \"\",\n    \"salary_min\": \"\",\n    \"salary_max\": \"\",\n    \"job_type\": \"\",\n    \"is_remote\": \"\",\n    \"published_at\": \"\",\n    \"created_at\": \"\",\n    \"updated_at\": \"\",\n    \"attributes\": [\n      {\n        \"id\": 0,\n        \"name\": \"\",\n        \"value\": \"\"\n      }\n    ],\n    \"languages\": [\n      {\n        \"id\": 0,\n        \"name\": \"\"\n      }\n    ],\n    \"categories\": [\n      {\n        \"id\": 0,\n        \"name\": \"\"\n      }\n    ],\n    \"locations\": [\n      {\n        \"id\": 0,\n        \"city\": \"\",\n        \"country\": \"\",\n        \"state\": \"\"\n      }\n    ]\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Job",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Web developer",
+									"type": "text"
+								},
+								{
+									"key": "company_name",
+									"value": "AStudio",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Backend web developemnt",
+									"type": "text"
+								},
+								{
+									"key": "salary_min",
+									"value": "50000",
+									"type": "text"
+								},
+								{
+									"key": "salary_max",
+									"value": "90000",
+									"type": "text"
+								},
+								{
+									"key": "is_remote",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "job_type",
+									"value": "full-time",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "published",
+									"type": "text"
+								},
+								{
+									"key": "published_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "categories[]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "locations[]",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "locations[]",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "languages[]",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "languages[]",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "languages[]",
+									"value": "9",
+									"type": "text"
+								},
+								{
+									"key": "languages[]",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "attributes[0][id]",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "attributes[0][value]",
+									"value": "Senior",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/api/jobs/4",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"jobs",
+								"4"
+							]
+						},
+						"description": "This endpoint allows updating a specific job by sending an HTTP PUT request to the specified URL. The request should include the following parameters in x-www-form-urlencoded format:\n\n- title (text): The title of the job.\n    \n- company_name (text): The name of the company offering the job.\n    \n- description (text): Description of the job.\n    \n- salary_min (text): The minimum salary for the job.\n    \n- salary_max (text): The maximum salary for the job.\n    \n- is_remote (text): Indicates if the job is remote or not.\n    \n- job_type (text): Type of job.\n    \n- status (text): Status of the job.\n    \n- published_at (text): Date when the job was published.\n    \n- categories\\[\\] (text): Categories associated with the job.\n    \n- locations\\[\\] (text): Locations where the job is available.\n    \n- languages\\[\\] (text): Languages required for the job.\n    \n- attributes\\[0\\]\\[id\\] (text): ID of the attribute.\n    \n- attributes\\[0\\]\\[value\\] (text): Value of the attribute.\n    \n\nThe response to the request will be in JSON format with a status code of 200. The response body will contain the updated data for the job, including the ID, title, description, status, company name, salary range, job type, remote work availability, publication date, creation and update timestamps, attributes, languages, categories, and locations associated with the job."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Job",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host}}/api/jobs/12",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"jobs",
+								"12"
+							]
+						},
+						"description": "### Delete Job by ID\n\nThis endpoint is used to delete a specific job by its ID.\n\n#### Request\n\n- Method: `DELETE`\n    \n- URL: `{{host}}/api/jobs/12`\n    \n- Body:\n    \n    - Type: `form-data`\n        \n    - Description: No request body parameters\n        \n\n#### Response\n\n- Status: 200\n    \n- Content-Type: application/json\n    \n- { \"message\": \"\"}\n    \n    - Description: The response body contains a JSON object with a `message` key."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Filters",
+			"item": [
+				{
+					"name": "Category Resource",
+					"item": [
+						{
+							"name": "Categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/categories",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"categories"
+									]
+								},
+								"description": "This endpoint makes an HTTP GET request to retrieve a list of categories from the API. The response will contain an array of category objects, each including an ID, title, description, status, company name, salary range, job type, remote work status, publication and creation timestamps, attributes, languages, sub-categories, and locations.\n\n### Request Body\n\nThis request does not require a request body.\n\n### Response Body\n\nThe response will be in JSON format and will include:\n\n- \"data\": An array of category objects, each containing various details about the category.\n    \n- \"links\": Pagination links for navigating through the list of categories.\n    \n- \"meta\": Metadata including information about the current page, total items, and pagination details.\n    \n\nExample Response:\n\n``` json\n{\n    \"data\": [\n        {\n            \"id\": 0,\n            \"title\": \"\",\n            \"description\": \"\",\n            \"status\": \"\",\n            \"company_name\": \"\",\n            \"salary_min\": \"\",\n            \"salary_max\": \"\",\n            \"job_type\": \"\",\n            \"is_remote\": 0,\n            \"published_at\": \"\",\n            \"created_at\": \"\",\n            \"updated_at\": \"\",\n            \"attributes\": [\n                {\n                    \"id\": 0,\n                    \"name\": \"\",\n                    \"value\": \"\"\n                }\n            ],\n            \"languages\": [\n                {\n                    \"id\": 0,\n                    \"name\": \"\"\n                }\n            ],\n            \"categories\": [\n                {\n                    \"id\": 0,\n                    \"name\": \"\"\n                }\n            ],\n            \"locations\": [\n                {\n                    \"id\": 0,\n                    \"city\": \"\",\n                    \"country\": \"\",\n                    \"state\": \"\"\n                }\n            ]\n        }\n    ],\n    \"links\": {\n        \"first\": \"\",\n        \"last\": \"\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 0,\n        \"from\": 0,\n        \"last_page\": 0,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"\",\n                \"active\": true\n            }\n        ],\n        \"path\": \"\",\n        \"per_page\": 0,\n        \"to\": 0,\n        \"total\": 0\n    }\n}\n\n ```"
+							},
+							"response": []
+						},
+						{
+							"name": "Category By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/categories/2",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"categories",
+										"2"
+									]
+								},
+								"description": "\n### Get Category by ID\nThis endpoint retrieves the details of a specific category based on the provided ID.\n\n#### Request\n- Method: GET\n- URL: `{{host}}/api/categories/2`\n\n#### Response\n- Status: 200\n- Content-Type: application/json\n- Body:\n  ```json\n  {\n      \"data\": {\n          \"id\": 0,\n          \"name\": \"\"\n      }\n  }\n  ```\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Category Jobs",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/categories/2/jobs",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"categories",
+										"2",
+										"jobs"
+									]
+								},
+								"description": "\n## API Request Description\n\nThis endpoint makes an HTTP GET request to retrieve jobs under the category with ID 2.\n\n## Request Body\nThis request does not require a request body.\n\n## Response Body\nThe response is a JSON object with the following structure:\n\n```json\n{\n  \"data\": [\n    {\n      \"id\": 0,\n      \"title\": \"\",\n      \"description\": \"\",\n      \"status\": \"\",\n      \"company_name\": \"\",\n      \"salary_min\": \"\",\n      \"salary_max\": \"\",\n      \"job_type\": \"\",\n      \"is_remote\": 0,\n      \"published_at\": \"\",\n      \"created_at\": \"\",\n      \"updated_at\": \"\",\n      \"attributes\": [\n        {\n          \"id\": 0,\n          \"name\": \"\",\n          \"value\": \"\"\n        }\n      ],\n      \"languages\": [\n        {\n          \"id\": 0,\n          \"name\": \"\"\n        }\n      ],\n      \"categories\": [\n        {\n          \"id\": 0,\n          \"name\": \"\"\n        }\n      ],\n      \"locations\": [\n        {\n          \"id\": 0,\n          \"city\": \"\",\n          \"country\": \"\",\n          \"state\": \"\"\n        }\n      ]\n    }\n  ],\n  \"links\": {\n    \"first\": \"\",\n    \"last\": \"\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 0,\n    \"from\": 0,\n    \"last_page\": 0,\n    \"links\": [\n      {\n        \"url\": null,\n        \"label\": \"\",\n        \"active\": true\n      }\n    ],\n    \"path\": \"\",\n    \"per_page\": 0,\n    \"to\": 0,\n    \"total\": 0\n  }\n}\n```\n"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Location Resource",
+					"item": [
+						{
+							"name": "Locations",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/locations",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"locations"
+									]
+								},
+								"description": "\n### GET /api/locations\n\nThis endpoint retrieves a list of locations.\n\n#### Request\n\nNo request body is required for this endpoint.\n\n#### Response\n\nThe response will be in JSON format and will have the following schema:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"id\": {\n            \"type\": \"integer\"\n          },\n          \"city\": {\n            \"type\": \"string\"\n          },\n          \"country\": {\n            \"type\": \"string\"\n          },\n          \"state\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}\n```\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Location By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/locations/2",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"locations",
+										"2"
+									]
+								},
+								"description": "\n### Get Location Details\nThis endpoint retrieves the details of a specific location.\n\n#### Request\n- Method: GET\n- Endpoint: `{{host}}/api/locations/2`\n\n#### Response\n- Status: 200 OK\n- Content-Type: application/json\n- Body:\n  ```json\n  {\n      \"data\": {\n          \"id\": 0,\n          \"city\": \"\",\n          \"country\": \"\",\n          \"state\": \"\"\n      }\n  }\n  ```\n  The response contains the details of the location including the ID, city, country, and state.\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Location Jobs",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/locations/2/jobs",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"locations",
+										"2",
+										"jobs"
+									]
+								},
+								"description": "\n### Get Jobs by Location\n\nThis endpoint retrieves a list of jobs for a specific location.\n\n#### Request\n\n- Method: GET\n- URL: `{{host}}/api/locations/2/jobs`\n\n#### Response\n\nThe response will be in JSON format and will contain an array of job objects. Each job object will have the following properties:\n- `id` (number): The unique identifier for the job\n- `title` (string): The title of the job\n- `description` (string): A brief description of the job\n- `status` (string): The status of the job\n- `company_name` (string): The name of the company offering the job\n- `salary_min` (string): The minimum salary for the job\n- `salary_max` (string): The maximum salary for the job\n- `job_type` (string): The type of job\n- `is_remote` (number): Indicates if the job is remote (0 for false, 1 for true)\n- `published_at` (string): The date and time when the job was published\n- `created_at` (string): The date and time when the job was created\n- `updated_at` (string): The date and time when the job was last updated\n- `attributes` (array): An array of attributes associated with the job, each containing `id`, `name`, and `value` properties\n- `languages` (array): An array of languages associated with the job, each containing `id` and `name` properties\n- `categories` (array): An array of categories associated with the job, each containing `id` and `name` properties\n- `locations` (array): An array of locations associated with the job, each containing `id`, `city`, `country`, and `state` properties\n\nThe response also includes pagination information under `links` and `meta` properties.\n\n"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Attribute Resource",
+					"item": [
+						{
+							"name": "Attributes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/attributes",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"attributes"
+									]
+								},
+								"description": "\nThe `GET` request to `/api/attributes` endpoint retrieves a list of attributes. The response is in JSON format and has a `200` status code. Below is the JSON schema for the response:\n\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"id\": {\n            \"type\": \"number\"\n          },\n          \"name\": {\n            \"type\": \"string\"\n          },\n          \"type\": {\n            \"type\": \"string\"\n          },\n          \"options\": {\n            \"type\": [\"array\", \"null\"]\n          }\n        }\n      }\n    }\n  }\n}\n}\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Attributes By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/attributes/4",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"attributes",
+										"4"
+									]
+								},
+								"description": "\n### Get Attribute Details\nThis endpoint retrieves the details of a specific attribute by its ID.\n\n#### Request\n- Method: GET\n- URL: `{{host}}/api/attributes/4`\n\n#### Response\n- Status: 200\n- Content-Type: application/json\n- Body:\n  ```json\n  {\n      \"data\": {\n          \"id\": 0,\n          \"name\": \"\",\n          \"type\": \"\",\n          \"options\": null\n      }\n  }\n  ```\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Attribute Jobs",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/attributes/12/jobs",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"attributes",
+										"12",
+										"jobs"
+									]
+								},
+								"description": "\n### Get Job Attributes\nThis endpoint retrieves job attributes for a specific job ID.\n\n#### Request\n- Method: GET\n- URL: `{{host}}/api/attributes/12/jobs`\n\n#### Response\nThe response will be in JSON format and will include the following fields:\n- `data` (array)\n  - `id` (number): The ID of the job\n  - `title` (string): The title of the job\n  - `description` (string): The description of the job\n  - `status` (string): The status of the job\n  - `company_name` (string): The name of the company\n  - `salary_min` (string): The minimum salary for the job\n  - `salary_max` (string): The maximum salary for the job\n  - `job_type` (string): The type of job\n  - `is_remote` (number): Indicates if the job is remote (0 for false, 1 for true)\n  - `published_at` (string): The date when the job was published\n  - `created_at` (string): The date when the job was created\n  - `updated_at` (string): The date when the job was last updated\n  - `attributes` (array): Additional attributes of the job\n    - `id` (number): The ID of the attribute\n    - `name` (string): The name of the attribute\n    - `value` (string): The value of the attribute\n  - `languages` (array): Languages required for the job\n    - `id` (number): The ID of the language\n    - `name` (string): The name of the language\n  - `categories` (array): Categories related to the job\n    - `id` (number): The ID of the category\n    - `name` (string): The name of the category\n  - `locations` (array): Locations related to the job\n    - `id` (number): The ID of the location\n    - `city` (string): The city of the location\n    - `country` (string): The country of the location\n    - `state` (string): The state of the location\n- `links` (object): Links for pagination\n  - `first` (string): Link to the first page\n  - `last` (string): Link to the last page\n  - `prev` (string): Link to the previous page (null if none)\n  - `next` (string): Link to the next page\n- `meta` (object): Metadata about the response\n  - `current_page` (number): The current page number\n  - `from` (number): The starting index of the results\n  - `last_page` (number): The last page number\n  - `links` (array): Additional links\n    - `url` (string): The URL of the link\n    - `label` (string): The label of the link\n    - `active` (boolean): Indicates if the link is active\n  - `path` (string): The path of the request\n  - `per_page` (number): The number of results per page\n  - `to` (number): The ending index of the results\n  - `total` (number): The total number of results\n\n"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Language Resource",
+					"item": [
+						{
+							"name": "Languages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/languages",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"languages"
+									]
+								},
+								"description": "\n### Get Languages\n\nThis endpoint makes an HTTP GET request to retrieve a list of languages.\n\n#### Request Body\nThis request does not require a request body.\n\n#### Response\n- Status: 200\n- Content-Type: application/json\n\nThe response will contain an array of language objects, where each object includes the following properties:\n- `id` (number): The unique identifier for the language.\n- `name` (string): The name of the language.\n\nExample response body:\n```json\n{\n    \"data\": [\n        {\n            \"id\": 0,\n            \"name\": \"\"\n        }\n    ]\n}\n```\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Language By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/languages/4",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"languages",
+										"4"
+									]
+								},
+								"description": "\n### Get Language by ID\n\nThis endpoint retrieves the details of a specific language based on the provided ID.\n\n#### Response\nThe response will be a JSON object with the following schema:\n\n```json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"data\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"id\": {\n                    \"type\": \"integer\"\n                },\n                \"name\": {\n                    \"type\": \"string\"\n                }\n            }\n        }\n    }\n}\n```\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Language Jobs",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/languages/4/jobs",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"languages",
+										"4",
+										"jobs"
+									]
+								},
+								"description": "The endpoint retrieves a list of jobs related to a specific language ID. The response is a JSON object containing an array of job objects, along with links and metadata for pagination.\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"data\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"id\": { \"type\": \"integer\" },\n          \"title\": { \"type\": \"string\" },\n          \"description\": { \"type\": \"string\" },\n          \"status\": { \"type\": \"string\" },\n          \"company_name\": { \"type\": \"string\" },\n          \"salary_min\": { \"type\": \"string\" },\n          \"salary_max\": { \"type\": \"string\" },\n          \"job_type\": { \"type\": \"string\" },\n          \"is_remote\": { \"type\": \"integer\" },\n          \"published_at\": { \"type\": \"string\" },\n          \"created_at\": { \"type\": \"string\" },\n          \"updated_at\": { \"type\": \"string\" },\n          \"attributes\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"id\": { \"type\": \"integer\" },\n                \"name\": { \"type\": \"string\" },\n                \"value\": { \"type\": \"string\" }\n              }\n            }\n          },\n          \"languages\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"id\": { \"type\": \"integer\" },\n                \"name\": { \"type\": \"string\" }\n              }\n            }\n          },\n          \"categories\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"id\": { \"type\": \"integer\" },\n                \"name\": { \"type\": \"string\" }\n              }\n            }\n          },\n          \"locations\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"id\": { \"type\": \"integer\" },\n                \"city\": { \"type\": \"string\" },\n                \"country\": { \"type\": \"string\" },\n                \"state\": { \"type\": \"string\" }\n              }\n            }\n          }\n        }\n      }\n    },\n    \"links\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"first\": { \"type\": \"string\" },\n        \"last\": { \"type\": \"string\" },\n        \"prev\": { \"type\": [\"string\", \"null\"] },\n        \"next\": { \"type\": \"string\" }\n      }\n    },\n    \"meta\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"current_page\": { \"type\": \"integer\" },\n        \"from\": { \"type\": \"integer\" },\n        \"last_page\": { \"type\": \"integer\" },\n        \"links\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"url\": { \"type\": [\"string\", \"null\"] },\n              \"label\": { \"type\": \"string\" },\n              \"active\": { \"type\": \"boolean\" }\n            }\n          }\n        },\n        \"path\": { \"type\": \"string\" },\n        \"per_page\": { \"type\": \"integer\" },\n        \"to\": { \"type\": \"integer\" },\n        \"total\": { \"type\": \"integer\" }\n      }\n    }\n  }\n}\n\n ```"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "localhost:8000",
+			"type": "string"
+		}
+	]
+}
