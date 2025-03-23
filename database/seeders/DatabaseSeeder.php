@@ -18,12 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //create random number of languages, locations, categories and attributes before jobs creation
-        Language::factory(random_int(10, 20))->create();
-        Location::factory(random_int(10, 20))->create();
-        Category::factory(random_int(10, 20))->create();
-        Attribute::factory(random_int(10, 20))->create();
-        $this->call(JobSeeder::class);
+        //Use either factory seeder or json seeder to create languages, locations, categories and attributes before jobs creation
+    
+        // $this->call(FactorySeeder::class);
+        $this->call(JsonSeeder::class);
+        
+
 
     }
 }

@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Frontend Development"
+  },
+  {
+    "id": 2,
+    "name": "Backend Development"
+  },
+  {
+    "id": 3,
+    "name": "Full Stack Development"
+  },
+  {
+    "id": 4,
+    "name": "Mobile Development"
+  },
+  {
+    "id": 5,
+    "name": "Data Science"
+  },
+  {
+    "id": 6,
+    "name": "DevOps"
+  },
+  {
+    "id": 7,
+    "name": "QA & Testing"
+  },
+  {
+    "id": 8,
+    "name": "UX/UI Design"
+  },
+  {
+    "id": 9,
+    "name": "Product Management"
+  },
+  {
+    "id": 10,
+    "name": "Technical Writing"
+  },
+  {
+    "id": 11,
+    "name": "Cybersecurity"
+  },
+  {
+    "id": 12,
+    "name": "Database Administration"
+  },
+  {
+    "id": 13,
+    "name": "AI & Machine Learning"
+  },
+  {
+    "id": 14,
+    "name": "Game Development"
+  },
+  {
+    "id": 15,
+    "name": "Cloud Computing"
+  },
+  {
+    "id": 16,
+    "name": "Embedded Systems"
+  },
+  {
+    "id": 17,
+    "name": "IT Support"
+  },
+  {
+    "id": 18,
+    "name": "Blockchain Development"
+  },
+  {
+    "id": 19,
+    "name": "Network Engineering"
+  },
+  {
+    "id": 20,
+    "name": "System Administration"
+  }
+] 

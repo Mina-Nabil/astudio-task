@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "city": "San Francisco",
+    "state": "California",
+    "country": "United States"
+  },
+  {
+    "id": 2,
+    "city": "New York",
+    "state": "New York",
+    "country": "United States"
+  },
+  {
+    "id": 3,
+    "city": "Seattle",
+    "state": "Washington",
+    "country": "United States"
+  },
+  {
+    "id": 4,
+    "city": "Austin",
+    "state": "Texas",
+    "country": "United States"
+  },
+  {
+    "id": 5,
+    "city": "London",
+    "state": "London",
+    "country": "United Kingdom"
+  },
+  {
+    "id": 6,
+    "city": "Berlin",
+    "state": "Berlin",
+    "country": "Germany"
+  },
+  {
+    "id": 7,
+    "city": "Toronto",
+    "state": "Ontario",
+    "country": "Canada"
+  },
+  {
+    "id": 8,
+    "city": "Singapore",
+    "state": "Singapore",
+    "country": "Singapore"
+  },
+  {
+    "id": 9,
+    "city": "Sydney",
+    "state": "New South Wales",
+    "country": "Australia"
+  },
+  {
+    "id": 10,
+    "city": "Tokyo",
+    "state": "Tokyo",
+    "country": "Japan"
+  },
+  {
+    "id": 11,
+    "city": "Amsterdam",
+    "state": "North Holland",
+    "country": "Netherlands"
+  },
+  {
+    "id": 12,
+    "city": "Boston",
+    "state": "Massachusetts",
+    "country": "United States"
+  },
+  {
+    "id": 13,
+    "city": "Chicago",
+    "state": "Illinois",
+    "country": "United States"
+  },
+  {
+    "id": 14,
+    "city": "Paris",
+    "state": "Paris",
+    "country": "France"
+  },
+  {
+    "id": 15,
+    "city": "Tel Aviv",
+    "state": "Tel Aviv",
+    "country": "Israel"
+  },
+  {
+    "id": 16,
+    "city": "Bangalore",
+    "state": "Karnataka",
+    "country": "India"
+  },
+  {
+    "id": 17,
+    "city": "Dublin",
+    "state": "Dublin",
+    "country": "Ireland"
+  },
+  {
+    "id": 18,
+    "city": "Vancouver",
+    "state": "British Columbia",
+    "country": "Canada"
+  },
+  {
+    "id": 19,
+    "city": "Stockholm",
+    "state": "Stockholm",
+    "country": "Sweden"
+  },
+  {
+    "id": 20,
+    "city": "Dubai",
+    "state": "Dubai",
+    "country": "United Arab Emirates"
+  }
+] 

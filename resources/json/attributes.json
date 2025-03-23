@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "years_experience",
+    "type": "number",
+    "options": null
+  },
+  {
+    "id": 2,
+    "name": "education_level",
+    "type": "select",
+    "options": "[\"High School\", \"Associate's\", \"Bachelor's\", \"Master's\", \"PhD\"]"
+  },
+  {
+    "id": 3,
+    "name": "certification_required",
+    "type": "boolean",
+    "options": null
+  },
+  {
+    "id": 4,
+    "name": "application_deadline",
+    "type": "date",
+    "options": null
+  },
+  {
+    "id": 5,
+    "name": "required_skills",
+    "type": "text",
+    "options": null
+  },
+  {
+    "id": 6,
+    "name": "team_size",
+    "type": "number",
+    "options": null
+  },
+  {
+    "id": 7,
+    "name": "seniority_level",
+    "type": "select",
+    "options": "[\"Junior\", \"Mid-Level\", \"Senior\", \"Lead\", \"Principal\"]"
+  },
+  {
+    "id": 8,
+    "name": "relocation_assistance",
+    "type": "boolean",
+    "options": null
+  },
+  {
+    "id": 9,
+    "name": "start_date",
+    "type": "date",
+    "options": null
+  },
+  {
+    "id": 10,
+    "name": "tech_stack",
+    "type": "text",
+    "options": null
+  },
+  {
+    "id": 11,
+    "name": "project_duration",
+    "type": "number",
+    "options": null
+  },
+  {
+    "id": 12,
+    "name": "industry",
+    "type": "select",
+    "options": "[\"Finance\", \"Healthcare\", \"Education\", \"Retail\", \"Entertainment\", \"Technology\", \"Transportation\", \"Manufacturing\"]"
+  },
+  {
+    "id": 13,
+    "name": "health_insurance",
+    "type": "boolean",
+    "options": null
+  },
+  {
+    "id": 14,
+    "name": "contract_end_date",
+    "type": "date",
+    "options": null
+  },
+  {
+    "id": 15,
+    "name": "responsibilities",
+    "type": "text",
+    "options": null
+  },
+  {
+    "id": 16,
+    "name": "vacation_days",
+    "type": "number",
+    "options": null
+  },
+  {
+    "id": 17,
+    "name": "work_model",
+    "type": "select",
+    "options": "[\"On-site\", \"Hybrid\", \"Remote\"]"
+  },
+  {
+    "id": 18,
+    "name": "equity_offered",
+    "type": "boolean",
+    "options": null
+  },
+  {
+    "id": 19,
+    "name": "application_review_date",
+    "type": "date",
+    "options": null
+  },
+  {
+    "id": 20,
+    "name": "required_certifications",
+    "type": "text",
+    "options": null
+  }
+] 

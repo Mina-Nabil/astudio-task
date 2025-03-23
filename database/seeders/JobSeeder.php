@@ -30,7 +30,15 @@ class JobSeeder extends Seeder
             $job->locations()->attach($locations->random(random_int(0, 3)));
             $job->languages()->attach($languages->random(random_int(1, 3)));
             for ($i = 0; $i < random_int(1, 12); $i++) {
-                $job->attributes()->attach($attributes->random(1), ['value' => fake()->word()]);
+                $attribute = $attributes->random(1)->first();
+                $attribute_value = match ($attribute->type) {
+                    'select' => fake()->randomElement(json_decode($attribute->options)),
+                    'boolean' => fake()->boolean(),
+                    'number' => fake()->numberBetween(1, 100),
+                    'date' => fake()->date(),
+                    'text' => fake()->word(),
+                };
+                $job->attributes()->attach($attribute, ['value' => $attribute_value]);
             }
         });
     }
