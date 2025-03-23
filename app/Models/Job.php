@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class Job extends Model
 {
@@ -57,7 +58,141 @@ class Job extends Model
         'languages',
     ];
 
-    ///scopes
+    /**
+     * Create a new job from a StoreJobRequest
+     *
+     * @param \App\Http\Requests\StoreJobRequest $request
+     * @return Job
+     */
+    public static function createFromRequest($request)
+    {
+        Log::info(json_encode($request->all()));
+        // Start a database transaction to ensure all related data is saved correctly
+        return DB::transaction(function () use ($request) {
+            // Create new job with basic fields
+            $job = self::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'company_name' => $request->company_name,
+                'salary_min' => $request->salary_min,
+                'salary_max' => $request->salary_max,
+                'is_remote' => $request->is_remote,
+                'job_type' => $request->job_type,
+                'status' => $request->status,
+                'published_at' => $request->published_at ?? Carbon::now(),
+            ]);
+
+            // Attach categories if provided
+            if ($request->has('categories') && is_array($request->categories)) {
+                $job->categories()->attach($request->categories);
+            }
+
+            // Attach locations if provided
+            if ($request->has('locations') && is_array($request->locations)) {
+                $job->locations()->attach($request->locations);
+            }
+
+            // Attach languages if provided
+            if ($request->has('languages') && is_array($request->languages)) {
+                $job->languages()->attach($request->languages);
+            }
+
+            // Attach attributes if provided - using array instead of object due to super attributes property
+            if ($request->has('attributes') && is_array($request['attributes'])) {
+                foreach ($request['attributes'] as $attribute) {
+                    $job->attributes()->attach($attribute['id'], [
+                        'value' => $attribute['value']
+                    ]);
+                }
+            }
+
+            // Load relationships and return the job
+            return $job->load(['categories', 'locations', 'languages', 'attributes']);
+        });
+    }
+
+    /**
+     * Update an existing job from a StoreJobRequest
+     *
+     * @param \App\Http\Requests\StoreJobRequest $request
+     * @return Job
+     */
+    public function updateFromRequest($request)
+    {
+        // Start a database transaction to ensure all related data is updated correctly
+        return DB::transaction(function () use ($request) {
+            // Update job with basic fields
+            $this->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'company_name' => $request->company_name,
+                'salary_min' => $request->salary_min,
+                'salary_max' => $request->salary_max,
+                'is_remote' => $request->is_remote,
+                'job_type' => $request->job_type,
+                'status' => $request->status,
+                'published_at' => $request->published_at ?? Carbon::now(),
+            ]);
+
+            // Update categories if provided
+            if ($request->has('categories')) {
+                $this->categories()->sync($request->categories);
+            }
+
+            // Update locations if provided
+            if ($request->has('locations')) {
+                $this->locations()->sync($request->locations);
+            }
+
+            // Update languages if provided
+            if ($request->has('languages')) {
+                $this->languages()->sync($request->languages);
+            }
+
+            // Update attributes if provided
+            if ($request->has('attributes') && is_array($request->attributes)) {
+                // Get existing attribute IDs to determine which ones to detach
+                $existingAttributeIds = $this->attributes()->pluck('attributes.id')->toArray();
+                $newAttributeIds = array_column($request->attributes, 'id');
+
+                // Attribute IDs to detach (in existing but not in new)
+                $attributeIdsToDetach = array_diff($existingAttributeIds, $newAttributeIds);
+                
+                // Detach attributes that are no longer needed
+                if (!empty($attributeIdsToDetach)) {
+                    $this->attributes()->detach($attributeIdsToDetach);
+                }
+
+                // Update or attach new attributes
+                foreach ($request['attributes'] as $attribute) {
+                    // Check if the attribute is already attached
+                    $existingAttribute = $this->attributes()
+                        ->where('attributes.id', $attribute['id'])
+                        ->first();
+
+                    if ($existingAttribute) {
+                        // Update existing attribute value
+                        $this->attributes()->updateExistingPivot($attribute['id'], [
+                            'value' => $attribute['value']
+                        ]);
+                    } else {
+                        // Attach new attribute
+                        $this->attributes()->attach($attribute['id'], [
+                            'value' => $attribute['value']
+                        ]);
+                    }
+                }
+            }
+
+            // Refresh the model with relationships
+            $this->refresh();
+            $this->load(['categories', 'locations', 'languages', 'attributes']);
+
+            return $this;
+        });
+    }
+
+    ///model scopes
     public function scopeWithRelations(Builder $query): Builder
     {
         return $query->with(self::RELATIONS);
