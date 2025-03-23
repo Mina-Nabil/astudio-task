@@ -1,4 +1,4 @@
-# Job Board API
+# Job Listing API
 
 A modern and flexible API for a job board application built with Laravel. This API provides comprehensive job listing functionality with advanced filtering capabilities.
 
@@ -317,4 +317,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - Laravel team for the amazing framework
-- All contributors to this project
