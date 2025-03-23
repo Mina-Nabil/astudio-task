@@ -29,6 +29,17 @@ class Attribute extends Model
         self::TYPE_SELECT,
     ];
 
+    //Attributes
+    public function getIsNumericAttribute()
+    {
+        return $this->type === self::TYPE_NUMBER;
+    }
+    public function getIsDateAttribute()
+    {
+        return $this->type === self::TYPE_DATE;
+    }
+
+    //Relations
     public function jobs() : BelongsToMany
     {
         return $this->belongsToMany(Job::class, 'job_attribute_values')

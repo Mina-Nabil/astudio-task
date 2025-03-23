@@ -70,23 +70,16 @@ class JobFilterService
 
     public function filter($filterExpression = null)
     {
-        Log::info($filterExpression);
         $query = $this->parseFilter($filterExpression);
-        Log::info($query->toSql());
         return $query->withRelations()->withJobAttributes();
     }
 
 
 
-    private function parseFilter(string $filter)
+    private function parseFilter(?string $filter = null)
     {
-
-        if (strpos($filter, 'filter=') === 0) {
-            $filter = substr($filter, 7); // Remove 'filter=' prefix if exists
-        }
-
         // Initialize the query
-        $query = Job::query()->select('jobs.*');
+        $query = Job::query()->select('jobs.*')->groupBy('jobs.id');
 
         // If no filter is provided, return all jobs
         if (!$filter) {
@@ -104,13 +97,15 @@ class JobFilterService
 
     /**
      * Apply filter expression to query
+     * Function is recursive and can handle nested filters. First it checks for AND and OR conditions and then for relations and attributes.
+     * Finally it applies direct field filters.
      * 
      * @param Builder $query Builder instance
      * @param string $expression Filter expression
+     * @throws Exception if invalid filter expression is provided
      */
     private function applyFilterExpression(Builder $query, string $expression)
     {
-        Log::info($expression);
         // Handle AND conditions by calling the function recursively using where()
         if (preg_match('/(.+) AND (.+)/', $expression, $matches)) {
             $leftExpression = trim($matches[1]);
@@ -180,11 +175,15 @@ class JobFilterService
         }
 
         // Apply relationship filtering
-        if (preg_match('/(\w+)\s*(=|HAS_ANY|IS_ANY|EXISTS)\s*?\(?([\w\s,]*)\)?/', $expression, $matches) && in_array($matches[1], Job::RELATIONS)) {
+        if (preg_match('/(\w+)\s*(=|HAS_ANY|IS_ANY|EXISTS)\s*\(?([^)]*)\)?/', $expression, $matches) && in_array($matches[1], Job::RELATIONS)) {
+            Log::info('expression: ' . $expression);
+            Log::info('matches: ' . json_encode($matches));
             $relation = $matches[1];
             $operator = $matches[2];
             $values = !empty($matches[3]) ? array_map('trim', explode(',', $matches[3])) : [];
-
+            Log::info('relation: ' . $relation);
+            Log::info('operator: ' . $operator);
+            Log::info('values: ' . json_encode($values));
             $cleanValues = $this->cleanValues($values);
 
             if (in_array($relation, self::RELATIONS)) {
@@ -222,26 +221,29 @@ class JobFilterService
         }
 
         // Apply attribute conditions (EAV pattern)
-        if (preg_match('/attribute:(\w+)\s*(=|!=|>|<|>=|<=|LIKE|IN)\s*?\(?([\w\s,\'\".-]*)\)?/', $expression, $matches)) {
+        if (preg_match('/attribute:(\w+)\s*(>=|<=|LIKE|IN|=|!=|>|<)\s*(\(.*\)|[^()\s]+)/', $expression, $matches)) {
             $attributeName = $matches[1];
             $operator = strtoupper($matches[2]);
             $valuesStr = trim($matches[3]);
             $values = array_map('trim', explode(',', $valuesStr));
 
             $cleanValues = $this->cleanValues($values);
-
-            $this->applyAttributeFilter($query, $attributeName, $operator, $cleanValues);
+            $attribute = Attribute::where('name', $attributeName)->first();
+            if (!$attribute) {
+                throw new Exception("Attribute not found: $attributeName");
+            }
+            $this->addJoin('job_att_' . $attribute->id);
+            $this->applyAttributeFilter($query, $attribute, $operator, $cleanValues);
 
             return;
         }
 
         // Applying direct field filters
-        if (preg_match('/(\w+)\s*(IN|LIKE|>=|<=|>|<|=|!=)\s*(?:\(([\w\s,\'\".-]+)\)|([a-zA-Z0-9_-]+))/', $expression, $matches)) {
+        if (preg_match('/(\w+)\s*(>=|<=|LIKE|IN|=|!=|>|<)\s*(\(.*\)|[^()\s]+)/', $expression, $matches)) {
             $field = $matches[1];
             $operator = $matches[2];
             $valuesStr = $matches[3];
             $values = array_map('trim', explode(',', $valuesStr));
-
             // Remove quotes if present in each value
             $cleanValues = $this->cleanValues($values);
 
@@ -293,6 +295,9 @@ class JobFilterService
                 case 'languages':
                     $query->joinLanguages();
                     break;
+                case str_starts_with($join, 'job_att_'):
+                    $query->joinAttributes($join);
+                    break;
             }
         }
     }
@@ -305,18 +310,11 @@ class JobFilterService
      * @param string $operator Operator
      * @param array $values Values
      */
-    private function applyAttributeFilter(Builder $query, string $attributeName, string $operator, array $values)
+    private function applyAttributeFilter(Builder $query, Attribute $attribute, string $operator, array $values)
     {
-        $attribute = Attribute::where('name', $attributeName)->first();
-
-        if (!$attribute) {
-            throw new Exception("Attribute not found: $attributeName");
-        }
-
         $this->validateTypeOperator($attribute->type, $operator);
 
-        $query->filterByJobAttributes($attribute->id, $operator, $values);
-
+        $query->filterByJobAttributes($attribute, $operator, $values);
     }
 
     /**
@@ -361,12 +359,19 @@ class JobFilterService
     }
 
     /**
-     * Add join to joins array
+     * Add join to joins array. Checks if relation is valid and not already in joins array.
      * 
      * @param string $relation Relation name
      */
     private function addJoin(string $relation)
     {
-        $this->joins[] = $relation;
+        //Make sure relation is valid or attribute accessor
+        if (!in_array($relation, self::RELATIONS) && !str_starts_with($relation, 'job_att_')) {
+            throw new Exception("Invalid relation: $relation");
+        }
+        //Make sure relation is not already in joins array
+        if (!in_array($relation, $this->joins)) {
+            $this->joins[] = $relation;
+        }
     }
 }

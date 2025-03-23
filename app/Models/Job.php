@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Log;
 
 class Job extends Model
 {
@@ -86,6 +87,19 @@ class Job extends Model
     }
 
     /**
+     * Join job attributes based on attribute accessor. To allow multiple joins for different attributes.
+     * 
+     * @param Builder $query Builder instance
+     * @param string $attribute_accessor Attribute accessor
+     * @return Builder
+     */
+    public function scopeJoinAttributes(Builder $query, string $attribute_accessor): Builder
+    {
+        return $query->join("job_attribute_values as $attribute_accessor", 'jobs.id', '=', "$attribute_accessor.job_id")
+            ->join("attributes as att_$attribute_accessor", "$attribute_accessor.attribute_id", '=', "att_$attribute_accessor.id");
+    }
+
+    /**
      * Join job attributes based on attribute ID.
      * 
      * @param Builder $query Builder instance
@@ -94,24 +108,48 @@ class Job extends Model
      * @param array $values Values
      * @return Builder
      */
-    public function scopeFilterByJobAttributes(Builder $query, $attribute_id, $operator, $values): Builder
+    public function scopeFilterByJobAttributes(Builder $query, Attribute $attribute, $operator, $values): Builder
     {
-         $query->join('job_attribute_values', 'jobs.id', '=', 'job_attribute_values.job_id')
-            ->where('job_attribute_values.attribute_id', $attribute_id);
+        //Validation for date and numeric attributes
+        if ($attribute->is_date) {
+            $values = array_map(function ($value) {
+                try {
+                    return Carbon::parse($value)->format('Y-m-d');
+                } catch (Exception $e) {
+                    throw new Exception("Invalid date format: $value");
+                }
+            }, $values);
+        }
 
-            switch ($operator) {
-                case 'IN':
-                    $query->whereIn('job_attribute_values.value', $values);
-                    break;
-                case 'LIKE':
-                    $query->where('job_attribute_values.value', 'LIKE', '%' . $values[0] . '%');
-                    break;
-                default:
-                    $query->where('job_attribute_values.value', $operator, $values[0]);
-                    break;
-            }
+        if ($attribute->is_numeric) {
+            $values = array_map(function ($value) {
+                try {
+                    return (float)$value;
+                } catch (Exception $e) {
+                    throw new Exception("Invalid numeric format: $value");
+                }
+            }, $values);
+        }
 
-            return $query;
+        $query->where("job_att_$attribute->id.attribute_id", $attribute->id);
+        switch ($operator) {
+            case 'IN':
+                $query->whereIn("job_att_$attribute->id.value", $values);
+                break;
+            case 'LIKE':
+                $query->where("job_att_$attribute->id.value", 'LIKE', '%' . $values[0] . '%');
+                break;
+            default:
+                if ($attribute->is_numeric) {
+                    $query->whereRaw("CAST(job_att_$attribute->id.value AS DECIMAL) $operator ?", $values[0]);
+                } else {
+                    $query->where("job_att_$attribute->id.value", $operator, $values[0]);
+                }
+                break;
+        }
+
+
+        return $query;
     }
 
     /**

@@ -24,6 +24,7 @@ class JobController extends Controller
             $jobs = $this->jobFilterService->filter($filter)->paginate(20);
             return JobResource::collection($jobs);
         } catch (Exception $e) {
+            report($e);
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
